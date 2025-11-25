@@ -36,7 +36,8 @@ host-suffix, biz.weibo.com, reject
 ^https?:\/\/new\.vip\.weibo\.cn\/aj\/appicon\/list url jsonjq-response-body '.data.list |= map(if has("cardType") then .cardType = "2" else . end | if has("tag") then .tag = "" else . end)'
 
 # > 微博净化
-^https?:\/\/api\.weibo\.cn\/\d\/(statuses\/container_detail|comments\/build_comments|statuses\/container_timeline|profile\/container_timeline|messageflow\/notice|search\/finder|search\/container_discover|search\/container_timeline|flowlist|statuses\/longtext_show_batch|searchall) url script-response-body https://raw.githubusercontent.com/neishe321/My_Scripts/main/Scripts/weibo_clean.js
+^https?:\/\/api\.weibo\.cn\/\d\/(statuses\/container_detail|comments\/build_comments|statuses\/container_timeline|profile\/container_timeline|messageflow\/notice|search\/finder|search\/container_discover|search\/container_timeline|flowlist|statuses\/longtext_show_batch|searchall) url script-response-body https://raw.githubusercontent.com/neishe321/Scripts/main/Scripts/weibo_clean.js
+
 
 
 
