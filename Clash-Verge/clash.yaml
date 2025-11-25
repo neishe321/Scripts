@@ -1,0 +1,329 @@
+mode: rule
+mixed-port: 7897
+allow-lan: false
+log-level: warning
+ipv6: false
+external-controller: 127.0.0.1:9097
+secret: set-your-secret
+unified-delay: true
+profile:
+  store-selected: true
+external-controller-cors:
+  allow-private-network: true
+  allow-origins:
+    - tauri://localhost
+    - http://tauri.localhost
+    - https://yacd.metacubex.one
+    - https://metacubex.github.io
+    - https://board.zash.run.place
+tun:
+  enable: false
+  stack: gvisor
+  auto-route: true
+  strict-route: false
+  auto-detect-interface: true
+  dns-hijack:
+    - any:53
+
+dns:
+  enable: true
+  listen: 0.0.0.0:1053
+  ipv6: false
+  respect-rules: true
+  enhanced-mode: fake-ip
+  fake-ip-range: 28.0.0.1/8
+  fake-ip-filter-mode: blacklist
+  fake-ip-filter:
+    - '*.lan'
+    - '*.local'
+    - '*.arpa'
+    - 'time.*.com'
+    - 'ntp.*.com'
+    - '+.market.xiaomi.com'
+    - 'localhost.ptlogin2.qq.com'
+    - '*.msftncsi.com'
+    - 'www.msftconnecttest.com'
+  default-nameserver:
+    - 223.5.5.5
+    - 119.29.29.29
+  nameserver:
+    - 223.5.5.5
+    - 119.29.29.29
+    - 'https://doh.pub/dns-query'
+    - 'https://dns.alidns.com/dns-query'
+  fallback: []
+  nameserver-policy: {}
+  proxy-server-nameserver:
+    - 'https://doh.pub/dns-query'
+    - 'https://dns.alidns.com/dns-query'
+    - 'tls://223.5.5.5'
+  direct-nameserver: []
+  direct-nameserver-follow-policy: false
+  fallback-filter:
+    geoip: true
+    geoip-code: CN
+    ipcidr:
+      - 240.0.0.0/4
+      - 0.0.0.0/32
+    domain:
+      - '+.google.com'
+      - '+.facebook.com'
+      - '+.youtube.com'
+
+# --------- 代理节点 ---------
+proxies:
+  - name: "Vkvm-JP"
+    type: ss
+    server: 154.36.183.21
+    port: 8443
+    cipher: 2022-blake3-aes-256-gcm
+    password: "0hf5n6luVr9cTC+dkh9KjUyN33ZCMLC9HgFc7D4JilM="
+    udp: true
+    tfo: true
+    plugin: shadow-tls
+    plugin-opts:
+      mode: client
+      version: 3
+      password: "6QJW7lvTySR8LCLa"
+      sni: "captive.apple.com"
+      host: "captive.apple.com"
+      udp-port: 20348
+
+
+
+# 机场订阅
+proxy-providers:
+  Airport:
+    type: http
+    url: "https://page-c87.pages.dev/846cd9b6-f060-473b-b8d5-c2c153c7f5fb/sub"
+    interval: 1440
+    path: "./providers/Airport.yaml"
+    health-check:
+      enable: true
+      url: "https://www.google.com/generate_204"
+      interval: 300
+      timeout: 3
+
+
+proxy-group-base: &proxy-group-base
+  interval: 300
+  timeout: 3000
+  lazy: true
+  max-failed-times: 3
+  hidden: false
+  
+# 策略组
+proxy-groups:
+  - <<: *proxy-group-base
+    name: "节点选择"
+    type: select
+    proxies:
+      - "延迟选优"
+      - "故障转移"
+      - "自建节点"
+      - "CF优选节点"
+      # - "美国节点"
+      # - "狮城节点"
+      # - "香港节点"
+      # - "日本节点"
+      # - "台湾节点"
+      - "DIRECT"
+    url: "https://www.google.com/generate_204"
+    icon: "https://www.clashverge.dev/assets/icons/adjust.svg"
+
+  - <<: *proxy-group-base
+    name: "延迟选优"
+    type: url-test
+    proxies:
+      - "自建节点"
+      - "CF优选节点"
+      # - "美国节点"
+      # - "狮城节点"
+      # - "香港节点"
+      # - "日本节点"
+      # - "台湾节点"
+    tolerance: 100
+    url: "https://www.google.com/generate_204"
+    icon: "https://www.clashverge.dev/assets/icons/speed.svg"
+
+  - <<: *proxy-group-base
+    name: "故障转移"
+    type: fallback
+    proxies:
+      - "自建节点"
+      - "CF优选节点"
+      # - "美国节点"
+      # - "狮城节点"
+      # - "香港节点"
+      # - "日本节点"
+      # - "台湾节点"
+      - "DIRECT"
+    url: "https://www.google.com/generate_204"
+    icon: "https://www.clashverge.dev/assets/icons/ambulance.svg"
+
+  - <<: *proxy-group-base
+    name: "自建节点"
+    type: select
+    proxies:
+      - "Vkvm-JP"
+    icon: "https://www.clashverge.dev/assets/icons/linux.svg"
+
+  - <<: *proxy-group-base
+    name: "CF优选节点"
+    type: select
+    use:
+      - Airport
+    icon: "https://www.clashverge.dev/assets/icons/cloudflare.svg"
+
+  # - <<: *proxy-group-base
+  #   name: "美国节点"
+  #   type: select
+  #   filter: "(?i)united states|us|美国"
+  #   include-all: true
+  #   icon: "https://upload.wikimedia.org/wikipedia/en/a/a4/Flag_of_the_United_States.svg"
+
+  # - <<: *proxy-group-base
+  #   name: "狮城节点"
+  #   type: select
+  #   filter: "(?i)singapore|sg|新加坡"
+  #   include-all: true
+  #   icon: "https://upload.wikimedia.org/wikipedia/commons/4/48/Flag_of_Singapore.svg"
+
+  # - <<: *proxy-group-base
+  #   name: "香港节点"
+  #   type: select
+  #   filter: "(?i)hong kong|hk|香港"
+  #   include-all: true
+  #   icon: "https://upload.wikimedia.org/wikipedia/commons/5/5b/Flag_of_Hong_Kong.svg"
+
+  # - <<: *proxy-group-base
+  #   name: "日本节点"
+  #   type: select
+  #   filter: "(?i)japan|jp|日本"
+  #   include-all: true
+  #   icon: "https://upload.wikimedia.org/wikipedia/en/9/9e/Flag_of_Japan.svg"
+
+  # - <<: *proxy-group-base
+  #   name: "台湾节点"
+  #   type: select
+  #   filter: "(?i)taiwan|tw|台湾"
+  #   include-all: true
+  #   icon: "https://upload.wikimedia.org/wikipedia/commons/7/72/Flag_of_the_Republic_of_China.svg"
+
+  # - <<: *proxy-group-base
+  #   name: "Telegram"
+  #   type: select
+  #   proxies:
+  #     - "美国节点"
+  #     - "狮城节点"
+  #     - "香港节点"
+  #     - "日本节点"
+  #     - "台湾节点"
+  #     - "自建节点"
+  #   icon: "https://www.clashverge.dev/assets/icons/telegram.svg"
+
+  - <<: *proxy-group-base
+    name: "YouTube"
+    type: select
+    proxies:
+      - "节点选择"
+      - "自建节点"
+      - "CF优选节点"
+      # - "美国节点"
+      # - "狮城节点"
+      # - "香港节点"
+      # - "日本节点"
+      # - "台湾节点"
+    icon: "https://www.clashverge.dev/assets/icons/youtube.svg"
+
+  - <<: *proxy-group-base
+    name: "Media"
+    type: select
+    proxies:
+      - "节点选择"
+      - "自建节点"
+      - "CF优选节点"
+      - DIRECT
+      # - "美国节点"
+      # - "狮城节点"
+      # - "香港节点"
+      # - "日本节点"
+      # - "台湾节点"
+    icon: "https://fastly.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Infuse.png"
+
+  - <<: *proxy-group-base
+    name: "OpenAI"
+    type: select
+    proxies:
+      - "节点选择"
+      - "自建节点"
+      - "CF优选节点"
+      # - "美国节点"
+      # - "狮城节点"
+      # - "日本节点"
+    url: "https://chatgpt.com"
+    expected-status: 200
+    interval: 600
+    timeout: 5000
+    tolerance: 200
+    icon: "https://www.clashverge.dev/assets/icons/claude.svg"
+
+  - <<: *proxy-group-base
+    name: "漏网之鱼"
+    type: select
+    proxies:
+      - "节点选择"
+      - "延迟选优"
+      - "故障转移"
+      - DIRECT
+    icon: "https://www.clashverge.dev/assets/icons/fish.svg"
+
+
+rule-anchor:
+  classical: &classical
+    type: http
+    interval: 86400
+    behavior: classical
+    format: yaml
+
+
+# 规则集
+rule-providers:
+  advertising:
+    <<: *classical
+    url: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Advertising/Advertising_Classical.yaml"
+    path: "./ruleset/advertising.yaml"
+
+  openai:
+    <<: *classical
+    url: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/OpenAI/OpenAI.yaml"
+    path: "./ruleset/openai.yaml"
+
+  # telegram:
+  #   <<: *classical
+  #   url: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Telegram/Telegram.yaml"
+  #   path: "./ruleset/telegram.yaml"
+
+  youtube:
+    <<: *classical
+    url: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/YouTube/YouTube.yaml"
+    path: "./ruleset/youtube.yaml"
+
+
+
+rules:
+  # 代理规则
+  - RULE-SET,advertising,REJECT
+  # - RULE-SET,telegram,Telegram
+  - RULE-SET,youtube,YouTube
+  - RULE-SET,openai,OpenAI
+  - DOMAIN-KEYWORD,temby,Media
+  - DOMAIN,lite-v6.cn2gias.uk,Media
+  - DOMAIN,lite.cn2gias.uk,Media
+  - DOMAIN-SUFFIX,embymv.link,Media
+  
+  # 直连规则
+  - DOMAIN-KEYWORD,pc528,DIRECT
+  - GEOIP,LAN,DIRECT
+  - GEOIP,CN,DIRECT
+  - MATCH,漏网之鱼
