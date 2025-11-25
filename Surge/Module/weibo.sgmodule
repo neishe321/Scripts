@@ -40,7 +40,7 @@ http-response-jq ^https?:\/\/new\.vip\.weibo\.cn\/aj\/appicon\/list '.data.list 
 
 [Script]
 # > 微博净化
-weibo_clean.js = type=http-response,pattern=^https?:\/\/api\.weibo\.cn\/\d\/(statuses\/container_detail|comments\/build_comments|statuses\/container_timeline|profile\/container_timeline|messageflow\/notice|search\/finder|search\/container_discover|search\/container_timeline|flowlist|statuses\/longtext_show_batch|searchall),requires-body=1,max-size=0,script-path=https://raw.githubusercontent.com/neishe321/My_Scripts/main/Scripts/weibo_clean.js
+weibo_clean.js = type=http-response,pattern=^https?:\/\/api\.weibo\.cn\/\d\/(statuses\/container_detail|comments\/build_comments|statuses\/container_timeline|profile\/container_timeline|messageflow\/notice|search\/finder|search\/container_discover|search\/container_timeline|flowlist|statuses\/longtext_show_batch|searchall),requires-body=1,max-size=0,script-path=https://raw.githubusercontent.com/neishe321/Scripts/main/Scripts/weibo_clean.js
 
 [MITM]
 hostname = %APPEND% api.weibo.cn, new.vip.weibo.cn
