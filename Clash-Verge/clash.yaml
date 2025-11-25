@@ -95,7 +95,7 @@ proxies:
 proxy-providers:
   Airport:
     type: http
-    url: "https://page-c87.pages.dev/846cd9b6-f060-473b-b8d5-c2c153c7f5fb/sub"
+    url: "xxxx"
     interval: 1440
     path: "./providers/Airport.yaml"
     health-check:
@@ -326,4 +326,5 @@ rules:
   - DOMAIN-KEYWORD,pc528,DIRECT
   - GEOIP,LAN,DIRECT
   - GEOIP,CN,DIRECT
+
   - MATCH,漏网之鱼
