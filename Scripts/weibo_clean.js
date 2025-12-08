@@ -268,7 +268,7 @@ else if (url.includes("search/finder")) {
     if (obj?.header?.insert_data) delete obj.header.insert_data; // 发现页热搜下方滚动横幅和滚动横幅下方广告2
     if (obj?.channelInfo) delete obj.channelInfo.moreChannels; // 下拉功能入口
     if (Array.isArray(obj?.channelInfo?.channels)) {
-        const allowedtitles = new Set(['热点', '热问', '热转', '指数']); // 发现页热搜下方tab导航筛选
+        const allowedtitles = new Set(['热点', '热问', '热转']); // 发现页热搜下方tab导航筛选
         obj.channelInfo.channels = obj.channelInfo.channels.filter(channel => allowedtitles.has(channel.title));
     }
     const payload = obj.channelInfo?.channels?.find(c => c?.payload)?.payload; // 自动提取tab下的下的信息流
