@@ -43,7 +43,7 @@ function cleanExtend(obj) {
     delete obj.ad_tag_nature;
     delete obj.buttons;
     delete obj.extra_button_info;
-    delete obj.page_info;
+    // delete obj.page_info;    // 误删帖子信息
     delete obj?.sharecontent?.additional_indication_icon_url; // 底部按钮贴图广告
     delete obj.detail_top_right_button; // 右上角搜索
 
