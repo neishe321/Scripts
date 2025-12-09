@@ -23,6 +23,8 @@ host-suffix, biz.weibo.com, reject
 ^https?:\/\/api\.weibo\.cn\/\d+\/statuses\/container_positive url reject-200
 ^https?:\/\/api\.weibo\.cn\/\d+\/!\/was\/finder\/searchbarchange url reject-200
 ^https?:\/\/api\.weibo\.cn\/\d+\/search\/finder_nav_polling url reject-200
+^https?:\/\/api\.weibo\.cn\/\d+\/ug\/read_redpacket_complete  url reject-200
+^https?:\/\/api\.weibo\.cn\/\d+\/video\/real_time_feedback  url reject-200
 
 # > tab标签处理
 ^https?:\/\/api\.weibo\.cn\/\d\/groups\/allgroups\/v\d url jsonjq-response-body '.pageDatas |= map(select(.pageDataType != "homeExtend")) | (.pageDatas[0].categories[0].pageDatas |= del(.[0]))'
@@ -37,6 +39,7 @@ host-suffix, biz.weibo.com, reject
 
 # > 微博净化
 ^https?:\/\/api\.weibo\.cn\/\d\/(statuses\/container_detail|comments\/build_comments|statuses\/container_timeline|profile\/container_timeline|messageflow\/notice|search\/finder|search\/container_discover|search\/container_timeline|flowlist|statuses\/longtext_show_batch|searchall) url script-response-body https://raw.githubusercontent.com/neishe321/Scripts/main/Scripts/weibo_clean.js
+
 
 
 
