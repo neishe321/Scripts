@@ -24,6 +24,7 @@ DOMAIN-SUFFIX,biz.weibo.com,REJECT,pre-matching,no-resolve
 ^https?:\/\/api\.weibo\.cn\/\d+\/statuses\/container_positive  data-type=text  data="{}"  status-code=200  
 ^https?:\/\/api\.weibo\.cn\/\d+\/!\/was\/finder\/searchbarchange  data-type=text  data="{}"  status-code=200  
 ^https?:\/\/api\.weibo\.cn\/\d+\/search\/finder_nav_polling  data-type=text  data="{}"  status-code=200  
+^https?:\/\/api\.weibo\.cn\/\d+\/ug\/read_redpacket_complete  data-type=text  data="{}"  status-code=200
 
 
 [Body Rewrite]
