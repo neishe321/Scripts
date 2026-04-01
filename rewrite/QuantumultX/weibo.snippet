@@ -1,0 +1,76 @@
+#!name = 微博去广告
+#!desc = 去除微博广告，移除非必要模块。(更新时间: 2026/1/20)
+#!author = neishe321
+#!data = 2026/01/20 
+
+hostname = api.weibo.cn, new.vip.weibo.cn
+
+# 微博_开屏AD处理
+host, wbapp.uve.weibo.com, reject
+host, sdkapp.uve.weibo.com, reject
+host, bootpreload.uve.weibo.com, reject
+host, bootrealtime.uve.weibo.com, reject
+host-suffix, biz.weibo.com, reject
+
+# 微博_收集信息+弹窗推广
+^https?:\/\/api\.weibo\.cn\/\d+\/push\/active url reject-200
+^https?:\/\/api\.weibo\.cn\/\d+\/push\/info url reject-dict
+^https?:\/\/api\.weibo\.cn\/\d+\/client\/addlog_batch url reject-200
+# 微博_异步加载推广信息
+^https?:\/\/api\.weibo\.cn\/\d+\/container\/asyn url reject-200
+# 微博_超话发现活跃/搜索词
+^https?:\/\/api\.weibo\.cn\/\d+\/shproxy\/chaohua\/discovery\/searchactive url reject-200
+# 微博_签到签到任务
+^https?:\/\/api\.weibo\.cn\/\d+\/checkin\/show url reject-200
+# 微博_首页顶部直播推荐Tab 
+^https?:\/\/api\.weibo\.cn\/\d+\/live\/media_homelist url reject-200
+# 微博_首页信息流可能感兴趣推广
+^https?:\/\/api\.weibo\.cn\/\d+\/statuses\/container_positive url reject-200
+# 微博_搜索页默认填充词
+^https?:\/\/api\.weibo\.cn\/\d+\/!\/was\/finder\/searchbarchange url reject-200
+# 微博_搜索框热词轮询
+^https?:\/\/api\.weibo\.cn\/\d+\/search\/finder_nav_polling url reject-200
+# 微博_阅读领红包
+^https?:\/\/api\.weibo\.cn\/\d+\/ug\/read_redpacket_complete  url reject-200
+# 微博_播放数据回传
+^https?:\/\/api\.weibo\.cn\/\d+\/video\/real_time_feedback  url reject-200
+
+# 微博_关注标签处理
+^https?:\/\/api\.weibo\.cn\/\d\/groups\/allgroups\/v\d url jsonjq-response-body '.pageDatas |= map(select(.pageDataType != "homeExtend")) | (.pageDatas[0].categories[0].pageDatas |= del(.[0]))'
+# 微博_我的页面处理
+^https?:\/\/api\.weibo\.cn\/\d\/profile\/me url jsonjq-response-body '.items |= (.[0:2] | if length > 0 and .[0].header? then .[0].header |= del(.vipIcon, .vipView) else . end | if length > 1 and .[1].items? then .[1].items |= .[0:4] else . end)'
+# 微博_超话广场处理
+^https?:\/\/api\.weibo\.cn\/\d\/\!\/huati\/discovery_home_bottom_channels url jsonjq-response-body '.button_configs? |= empty | .channelInfo.channel_list |= if length > 1 then del(.[1]) else . end'
+# 微博_视频流广告处理
+^https?:\/\/api\.weibo\.cn\/\d\/video\/tiny_stream_video_list url jsonjq-response-body '.statuses |= map(if (.is_ad == 1 or .mblogtypename == "广告") then empty else . end)'
+# 微博_会员图标处理
+^https?:\/\/new\.vip\.weibo\.cn\/aj\/appicon\/list url jsonjq-response-body '.data.list |= map(if has("cardType") then .cardType = "2" else . end | if has("tag") then .tag = "" else . end)'
+
+# 微博_详情评论区内容清理
+^https?:\/\/api\.weibo\.cn\/\d\/statuses\/container_detail url script-response-body https://raw.githubusercontent.com/neishe321/Scripts/main/Scripts/weibo_ads.js
+# 微博_分享链接详情内容清理
+^https:\/\/api\.weibo\.cn\/\d\/statuses\/show url script-response-body https://raw.githubusercontent.com/neishe321/Scripts/main/Scripts/weibo_ads.js
+# 微博_首页信息流内容清理
+^https?:\/\/api\.weibo\.cn\/\d\/statuses\/container_timeline url script-response-body https://raw.githubusercontent.com/neishe321/Scripts/main/Scripts/weibo_ads.js
+# 微博_长文本动态内容清理
+^https?:\/\/api\.weibo\.cn\/\d\/statuses\/longtext_show_batch url script-response-body https://raw.githubusercontent.com/neishe321/Scripts/main/Scripts/weibo_ads.js
+# 微博_评论区头像等级清理
+^https?:\/\/api\.weibo\.cn\/\d\/comments\/build_comments url script-response-body https://raw.githubusercontent.com/neishe321/Scripts/main/Scripts/weibo_ads.js
+# 微博_个人主页信息流清理
+^https?:\/\/api\.weibo\.cn\/\d\/profile\/container_timeline url script-response-body https://raw.githubusercontent.com/neishe321/Scripts/main/Scripts/weibo_ads.js
+# 微博_发现页信息流清理1
+^https?:\/\/api\.weibo\.cn\/\d\/search\/finder url script-response-body https://raw.githubusercontent.com/neishe321/Scripts/main/Scripts/weibo_ads.js
+# 微博_发现页信息流清理2
+^https?:\/\/api\.weibo\.cn\/\d\/search\/container_discover url script-response-body https://raw.githubusercontent.com/neishe321/Scripts/main/Scripts/weibo_ads.js
+# 微博_发现页热点信息流清理
+^https?:\/\/api\.weibo\.cn\/\d\/search\/container_timeline url script-response-body https://raw.githubusercontent.com/neishe321/Scripts/main/Scripts/weibo_ads.js
+# 微博_发现页热转信息流清理
+^https?:\/\/api\.weibo\.cn\/\d\/flowlist url script-response-body https://raw.githubusercontent.com/neishe321/Scripts/main/Scripts/weibo_ads.js
+# 微博_全局搜索内容清理
+^https?:\/\/api\.weibo\.cn\/\d\/searchall url script-response-body https://raw.githubusercontent.com/neishe321/Scripts/main/Scripts/weibo_ads.js
+# 微博_消息动态内容清理
+^https?:\/\/api\.weibo\.cn\/\d\/messageflow\/notice url script-response-body https://raw.githubusercontent.com/neishe321/Scripts/main/Scripts/weibo_ads.js
+
+
+
+

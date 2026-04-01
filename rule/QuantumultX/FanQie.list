@@ -1,0 +1,64 @@
+# NAME: FanQie
+# AUTHOR: neishe321
+# REPO: https://github.com/neishe321/ios_rule_script
+# UPDATED: 2026-04-01 09:19:14
+# TOTAL: 55
+host,ug-sinfonlinea.bytedance.com,reject
+host,zlink.ugsdk.cn,reject
+host,mon.toutiaocloud.net,reject
+host,lf-normal-gr-sourcecdn.bytegecko.com,reject
+host,lf-webcast-gr-sourcecdn.bytegecko.com,reject
+host,p3-developer.bytemaimg.com,reject
+host,webcast-open.douyin.com,reject
+host,p11-webcast-sign.douyinpic.com,reject
+host,p3-webcast-sign.douyinpic.com,reject
+host,log3-applog.fqnovel.com,reject
+host,log5-applog.fqnovel.com,reject
+host,mon11-misc-lq.fqnovel.com,reject
+host,mon11-misc.fqnovel.com,reject
+host,mon3-misc.fqnovel.com,reject
+host,rtlog3-applog.fqnovel.com,reject
+host,rtlog5-applog.fqnovel.com,reject
+host,effect.snssdk.com,reject
+host,i.snssdk.com,reject
+host,is-lq.snssdk.com,reject
+host,is.snssdk.com,reject
+host,security.snssdk.com,reject
+host,vas.snssdk.com,reject
+host,mon.toutiaocloud.com,reject
+host,abtest3-misc.zijieapi.com,reject
+host,ads3-normal.zijieapi.com,reject
+host,ads5-normal.zijieapi.com,reject
+host,feedback-c.zijieapi.com,reject
+host,gecko3.zijieapi.com,reject
+host,gecko5.zijieapi.com,reject
+host,ma.zijieapi.com,reject
+host,minigame3-normal.zijieapi.com,reject
+host,minigame5-normal.zijieapi.com,reject
+host,mssdk.zijieapi.com,reject
+host,timon.zijieapi.com,reject
+host,vcs.zijieapi.com,reject
+
+host,i-lq.snssdk.com,reject
+host,dig.bdurl.net,reject
+host,activity-ag.awemeughun.com,reject
+host,mcs.snssdk.com,reject
+host,tnc3-alisc1.snssdk.com,reject
+host,security-lq.snssdk.com,reject
+host,tnc3-aliec2.snssdk.com,reject
+host,v6-novelapp.ixigua.com,reject
+host,msync-im1-vip6-std.easemob.com,reject
+host,apd-pcdnwxlogin.teg.tencent-cloud.net,reject
+host,api.iegadp.qq.com,reject
+host-suffix,novelapp.ixigua.com,reject
+host-suffix,default.ixigua.com,reject
+host-suffix,byteorge.com,reject
+# 下面两条误杀严重导致懂车帝无法正常使用
+#host-suffix,bytegoofy.com,reject
+#host-suffix,bytedance.com,reject
+IP-CIDR,49.71.37.101/32,reject
+IP-CIDR,117.71.105.23/32,reject
+IP-CIDR,218.94.207.205/32,reject
+IP-CIDR,117.92.229.188/32,reject
+IP-CIDR,101.36.166.16/32,reject
+IP-CIDR,180.96.2.114/32,reject

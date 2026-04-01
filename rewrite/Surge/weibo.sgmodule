@@ -1,0 +1,66 @@
+#!name = 微博去广告
+#!desc = 去除微博广告，移除非必要模块。(更新时间: 2026/1/20)
+#!author = neishe321
+#!category = Neishe
+#!date = 2026/01/20
+
+[Rule]
+# 微博_开屏AD处理
+DOMAIN,wbapp.uve.weibo.com,REJECT,pre-matching,no-resolve
+DOMAIN,sdkapp.uve.weibo.com,REJECT,pre-matching,no-resolve
+DOMAIN,bootpreload.uve.weibo.com,REJECT,pre-matching,no-resolve
+DOMAIN,bootrealtime.uve.weibo.com,REJECT,pre-matching,no-resolve
+DOMAIN-SUFFIX,biz.weibo.com,REJECT,pre-matching,no-resolve
+
+[Map Local]
+# 微博_收集信息+弹窗推广
+^https?:\/\/api\.weibo\.cn\/\d+\/push\/active  data-type=text  data="{}"  status-code=200  
+^https?:\/\/api\.weibo\.cn\/\d+\/push\/info  data-type=text  data="{}"  status-code=200  
+^https?:\/\/api\.weibo\.cn\/\d+\/client\/addlog_batch  data-type=text  data="{}"  status-code=200  
+# 微博_异步加载推广信息
+^https?:\/\/api\.weibo\.cn\/\d+\/container\/asyn  data-type=text  data="{}"  status-code=200  
+# 微博_超话发现活跃/搜索词
+^https?:\/\/api\.weibo\.cn\/\d+\/shproxy\/chaohua\/discovery\/searchactive  data-type=text  data="{}"  status-code=200  
+# 微博_签到签到任务
+^https?:\/\/api\.weibo\.cn\/\d+\/checkin\/show  data-type=text  data="{}"  status-code=200 
+# 微博_首页顶部直播推荐Tab 
+^https?:\/\/api\.weibo\.cn\/\d+\/live\/media_homelist  data-type=text  data="{}"  status-code=200  
+# 微博_首页信息流可能感兴趣推广
+^https?:\/\/api\.weibo\.cn\/\d+\/statuses\/container_positive  data-type=text  data="{}"  status-code=200  
+# 微博_搜索页默认填充词
+^https?:\/\/api\.weibo\.cn\/\d+\/!\/was\/finder\/searchbarchange  data-type=text  data="{}"  status-code=200  
+# 微博_搜索框热词轮询
+^https?:\/\/api\.weibo\.cn\/\d+\/search\/finder_nav_polling  data-type=text  data="{}"  status-code=200  
+# 微博_看视频领红包
+^https?:\/\/api\.weibo\.cn\/\d+\/ug\/read_redpacket_complete  data-type=text  data="{}"  status-code=200
+# 微博_播放数据回传
+^https?:\/\/api\.weibo\.cn\/\d+\/video\/real_time_feedback  data-type=text  data="{}"  status-code=200
+
+[Body Rewrite]
+# 微博_关注标签处理
+http-response-jq ^https?:\/\/api\.weibo\.cn\/\d\/groups\/allgroups\/v\d '.pageDatas |= map(select(.pageDataType != "homeExtend")) | (.pageDatas[0].categories[0].pageDatas |= del(.[0]))'
+# 微博_我的页面处理
+http-response-jq ^https?:\/\/api\.weibo\.cn\/\d\/profile\/me '.items |= (.[0:2] | if length > 0 and .[0].header? then .[0].header |= del(.vipIcon, .vipView) else . end | if length > 1 and .[1].items? then .[1].items |= .[0:4] else . end)'
+# 微博_超话广场处理
+http-response-jq ^https?:\/\/api\.weibo\.cn\/\d\/\!\/huati\/discovery_home_bottom_channels '.button_configs? |= empty | .channelInfo.channel_list |= if length > 1 then del(.[1]) else . end'
+# 微博_视频流广告处理
+http-response-jq ^https?:\/\/api\.weibo\.cn\/\d\/video\/tiny_stream_video_list '.statuses |= map(if (.is_ad == 1 or .mblogtypename == "广告") then empty else . end)'
+# 微博_会员图标处理
+http-response-jq ^https?:\/\/new\.vip\.weibo\.cn\/aj\/appicon\/list '.data.list |= map(if has("cardType") then .cardType = "2" else . end | if has("tag") then .tag = "" else . end)'
+
+[Script]
+微博详情评论区内容清理  = type=http-response,pattern=^https:\/\/api\.weibo\.cn\/\d\/statuses\/container_detail,script-path=https://raw.githubusercontent.com/neishe321/Scripts/main/Scripts/weibo_ads.js,requires-body=1,max-size=0
+微博分享链接详情内容清理  = type=http-response,pattern=^https:\/\/api\.weibo\.cn\/\d\/statuses\/show,script-path=https://raw.githubusercontent.com/neishe321/Scripts/main/Scripts/weibo_ads.js,requires-body=1,max-size=0
+微博首页信息流内容清理 = type=http-response,pattern=^https:\/\/api\.weibo\.cn\/\d\/statuses\/container_timeline,script-path=https://raw.githubusercontent.com/neishe321/Scripts/main/Scripts/weibo_ads.js,requires-body=1,max-size=0
+微博长文本动态内容清理 = type=http-response,pattern=^https:\/\/api\.weibo\.cn\/\d\/statuses\/longtext_show_batch,script-path=https://raw.githubusercontent.com/neishe321/Scripts/main/Scripts/weibo_ads.js,requires-body=1,max-size=0
+微博评论区头像等级清理 = type=http-response,pattern=^https:\/\/api\.weibo\.cn\/\d\/comments\/build_comments,script-path=https://raw.githubusercontent.com/neishe321/Scripts/main/Scripts/weibo_ads.js,requires-body=1,max-size=0
+微博个人主页信息流清理 = type=http-response,pattern=^https:\/\/api\.weibo\.cn\/\d\/profile\/container_timeline,script-path=https://raw.githubusercontent.com/neishe321/Scripts/main/Scripts/weibo_ads.js,requires-body=1,max-size=0
+微博发现页信息流清理1 = type=http-response,pattern=^https:\/\/api\.weibo\.cn\/\d\/search\/finder,script-path=https://raw.githubusercontent.com/neishe321/Scripts/main/Scripts/weibo_ads.js,requires-body=1,max-size=0
+微博发现页信息流清理2 = type=http-response,pattern=^https:\/\/api\.weibo\.cn\/\d\/search\/container_discover,script-path=https://raw.githubusercontent.com/neishe321/Scripts/main/Scripts/weibo_ads.js,requires-body=1,max-size=0
+微博发现页热点信息流清理 = type=http-response,pattern=^https:\/\/api\.weibo\.cn\/\d\/search\/container_timeline,script-path=https://raw.githubusercontent.com/neishe321/Scripts/main/Scripts/weibo_ads.js,requires-body=1,max-size=0
+微博发现页热转信息流清理 = type=http-response,pattern=^https:\/\/api\.weibo\.cn\/\d\/flowlist,script-path=https://raw.githubusercontent.com/neishe321/Scripts/main/Scripts/weibo_ads.js,requires-body=1,max-size=0
+微博全局搜索内容清理 = type=http-response,pattern=^https:\/\/api\.weibo\.cn\/\d\/searchall,script-path=https://raw.githubusercontent.com/neishe321/Scripts/main/Scripts/weibo_ads.js,requires-body=1,max-size=0
+微博消息动态内容清理 = type=http-response,pattern=^https:\/\/api\.weibo\.cn\/\d\/messageflow\/notice,script-path=https://raw.githubusercontent.com/neishe321/Scripts/main/Scripts/weibo_ads.js,requires-body=1,max-size=0
+
+[MITM]
+hostname = %APPEND% api.weibo.cn, new.vip.weibo.cn
