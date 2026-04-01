@@ -20,8 +20,8 @@
 
 | APP名称 | 介绍 | 订阅链接 | 维护状态 |
 | :--- | :--- | :--- | :--- |
-| **微博** | 微博移除信息流广告、去除多余模块 | [QX (Snippet)](https://raw.githubusercontent.com/neishe321/ios_rule_script/refs/heads/main/rewrite/QuantumultX/weibo.snippet) / [Surge (Module)](https://raw.githubusercontent.com/neishe321/ios_rule_script/refs/heads/main/rewrite/Surge/weibo.sgmodule) | 🟢 正常 |
-| **番茄小说** | 番茄小说去广告及弹窗屏蔽 | [QX (List)](https://raw.githubusercontent.com/neishe321/ios_rule_script/refs/heads/main/rule/QuantumultX/FanQie.list) / [Surge (List)](https://raw.githubusercontent.com/neishe321/ios_rule_script/refs/heads/main/rule/Surge/FanQie.list) | 🟢 正常 |
+| **微博** | 微博去除广告及多余模块 | [QX (Snippet)](https://raw.githubusercontent.com/neishe321/ios_rule_script/refs/heads/main/rewrite/QuantumultX/weibo.snippet) / [Surge (Module)](https://raw.githubusercontent.com/neishe321/ios_rule_script/refs/heads/main/rewrite/Surge/weibo.sgmodule) | 🟢 正常 |
+| **番茄小说** | 番茄小说去除广告及福利标签 | [QX (List)](https://raw.githubusercontent.com/neishe321/ios_rule_script/refs/heads/main/rule/QuantumultX/FanQie.list) / [Surge (List)](https://raw.githubusercontent.com/neishe321/ios_rule_script/refs/heads/main/rule/Surge/FanQie.list) | 🟢 正常 |
 
 ---
 
