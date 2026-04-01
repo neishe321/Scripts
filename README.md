@@ -19,10 +19,10 @@
 ## 🛡 规则来源
 我们并不生产规则，我们只是开源规则的搬运工。
 
-- **分流规则**:
+分流规则:
 
 [https://github.com/neishe321/ios_rule_script/tree/main/rule](https://github.com/neishe321/ios_rule_script/tree/main/rule)
-- **复写规则**:
+复写规则:
 
 [https://github.com/neishe321/ios_rule_script/tree/main/rewrite](https://github.com/neishe321/ios_rule_script/tree/main/rewrite)
 
