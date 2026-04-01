@@ -31,7 +31,19 @@
 ## 🤝 鸣谢
 感谢以下贡献者的辛勤付出（排名不分先后）：
 
-[@blackmatrix7](https://github.com/blackmatrix7) | [@BaileyZyp](https://github.com/BaileyZyp) | [@Mazeorz](https://github.com/Mazeorz) | [@LuzMasonj](https://github.com/LuzMasonj) | [@chouchoui](https://github.com/chouchoui) | [@ypannnn](https://github.com/ypannnn) | [@echizenryoma](https://github.com/echizenryoma) | [@zirawell](https://github.com/zirawell) | [@urzz](https://github.com/urzz) | [@ASD-max](https://github.com/ASD-max)
+## 🤝 鸣谢
+感谢以下贡献者的辛勤付出（排名不分先后）：
+
+* [@blackmatrix7](https://github.com/blackmatrix7)
+* [@BaileyZyp](https://github.com/BaileyZyp)
+* [@Mazeorz](https://github.com/Mazeorz)
+* [@LuzMasonj](https://github.com/LuzMasonj)
+* [@chouchoui](https://github.com/chouchoui)
+* [@ypannnn](https://github.com/ypannnn)
+* [@echizenryoma](https://github.com/echizenryoma)
+* [@zirawell](https://github.com/zirawell)
+* [@urzz](https://github.com/urzz)
+* [@ASD-max](https://github.com/ASD-max)
 ---
 
 ## ⚠️ 特别声明
