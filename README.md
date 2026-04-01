@@ -34,9 +34,6 @@
 ## 🤝 鸣谢
 感谢以下贡献者的辛勤付出（排名不分先后）：
 
-## 🤝 鸣谢
-感谢以下贡献者的辛勤付出（排名不分先后）：
-
 * [@blackmatrix7](https://github.com/blackmatrix7)
 * [@BaileyZyp](https://github.com/BaileyZyp)
 * [@Mazeorz](https://github.com/Mazeorz)
