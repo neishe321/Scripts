@@ -28,7 +28,7 @@ function cleanExtend(obj) {
     delete obj.topic_struct; // 文案可以点击的超链接
     delete obj.tag_struct; // 推广标签 && 类似深圳同城
     delete obj.common_struct;
-    
+
     // delete obj.pic_infos; // 文案带的图片
     delete obj.pic_bg_new;
     delete obj.pic_bg_new_dark;
@@ -46,7 +46,7 @@ function cleanExtend(obj) {
     if (obj?.title_source?.show_verified) obj.title_source.show_verified = false;
     delete obj?.header_info?.avatar?.flag_img;
     if (obj?.header_info?.show_verified) obj.header_info.show_verified = false;
-    
+
     delete obj?.pageinfo?.icon_list;    // 超话帖子详情用户后边一串图标 title_more
     delete obj?.pageinfo?.title_more;   // 超话帖子详情 最上边超话等级图标1
     // delete obj?.pageinfo?.button;    // 关注按钮
@@ -239,9 +239,9 @@ else if (url.includes("statuses/container_detail")) {
     removeVipSuffix(obj?.detailInfo?.status);
     cleanUser(obj?.detailInfo?.extend?.user);
     cleanExtend(obj?.detailInfo?.extend);
-    removeVipSuffix(obj?.detailInfo?.extend); 
+    removeVipSuffix(obj?.detailInfo?.extend);
 }
-    
+
 // statuses/show 通过分享点击的微博详情
 else if (url.includes("statuses/show")) {
     cleanUser(obj?.user);
@@ -274,14 +274,14 @@ else if (url.includes("search/finder")) {
     processFeedArray(obj?.header?.data?.items); // 发现页热搜下方滚动横幅和滚动横幅下方广告1
     if (obj?.header?.insert_data) delete obj.header.insert_data; // 发现页热搜下方滚动横幅和滚动横幅下方广告2
     if (obj?.channelInfo) delete obj.channelInfo.moreChannels; // 下拉功能入口
-    
+
     if (Array.isArray(obj?.channelInfo?.channels)) {
-        const allowedtitles = new Set(['热点', '热问', '热转']); // 发现页热搜下方tab导航筛选
+        const allowedtitles = new Set(['热点', '热转', '指数']); // 发现页热搜下方tab导航筛选
         obj.channelInfo.channels = obj.channelInfo.channels.filter(channel => allowedtitles.has(channel.title));
         // 发现页热点字体
-        if (obj.channelInfo.channels[0]?.titleInfo?.style) obj.channelInfo.channels[0].titleInfo.style.selectTextColor = "#333333"; 
+        if (obj.channelInfo.channels[0]?.titleInfo?.style) obj.channelInfo.channels[0].titleInfo.style.selectTextColor = "#333333";
     }
-    
+
     const payload = obj.channelInfo?.channels?.find(c => c?.payload)?.payload; // 自动提取tab下的下的信息流
     processFeedArray(payload?.items); // 处理提取的信息流
     if (payload?.loadedInfo) {
@@ -301,12 +301,12 @@ else if (url.includes("search/container_discover")) {
 }
 
 // 微博发现页热点/热问/热转 (*,"2/cardlist","2/flowlist")
-else if (url.includes("search/container_timeline") || url.includes("2/flowlist")) { 
+else if (url.includes("search/container_timeline") || url.includes("2/flowlist")) {
     processFeedArray(obj?.items);
 }
 
 // 微博长文本动态
-else if (url.includes("2/statuses/longtext_show_batch")) { 
+else if (url.includes("2/statuses/longtext_show_batch")) {
     processFeedArray(obj?.longtexts?.data);
 }
 
