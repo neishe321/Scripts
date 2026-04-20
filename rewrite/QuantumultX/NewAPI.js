@@ -5,7 +5,7 @@
 使用说明：先抓包一次保存 Cookie，再由定时任务自动签到（按域名分别保存，多站点可共用同一脚本；同站点支持多用户）。
 
 [rewrite_local]
-^https:\/\/.*\/api\/user\/self$ url script-request-header https://raw.githubusercontent.com/neishe321/ios_rule_script/refs/heads/main/rewrite/QuantumultX/NewAPIr.js
+^https:\/\/.*\/api\/user\/self$ url script-request-header https://raw.githubusercontent.com/neishe321/ios_rule_script/refs/heads/main/rewrite/QuantumultX/NewAPI.js
 
 [task_local]
 10 9 * * * https://raw.githubusercontent.com/neishe321/ios_rule_script/refs/heads/main/rewrite/QuantumultX/NewAPI.js, tag=通用签到(NewAPI), enabled=true
