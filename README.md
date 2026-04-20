@@ -1,57 +1,75 @@
-# Rules And Scripts
+# iOS Rule Script
 
-## 前言
-各平台的分流规则、复写规则及自动化脚本。
+适用于 Quantumult X 和 Surge 的规则、复写及脚本整理仓库。
 
-## 特别声明
-
-1. 本项目内所有资源文件，禁止任何公众号、自媒体进行任何形式的转载、发布。
-2. 编写本项目主要目的为学习和研究ES6，无法保证项目内容的合法性、准确性、完整性和有效性。
-3. 本项目涉及的数据由使用的个人或组织自行填写，本项目不对数据内容负责，包括但不限于数据的真实性、准确性、合法性。使用本项目所造成的一切后果，与本项目的所有贡献者无关，由使用的个人或组织完全承担。
-4. 本项目中涉及的第三方硬件、软件等，与本项目没有任何直接或间接的关系。本项目仅对部署和使用过程进行客观描述，不代表支持使用任何第三方硬件、软件。使用任何第三方硬件、软件，所造成的一切后果由使用的个人或组织承担，与本项目无关。
-5. 本项目中所有内容只供学习和研究使用，不得将本项目中任何内容用于违反国家/地区/组织等的法律法规或相关规定的其他用途。
-6. 所有基于本项目源代码，进行的任何修改，为其他个人或组织的自发行为，与本项目没有任何直接或间接的关系，所造成的一切后果亦与本项目无关。
-7. 所有直接或间接使用本项目的个人和组织，应24小时内完成学习和研究，并及时删除本项目中的所有内容。如对本项目的功能有需求，应自行开发相关功能。
 ---
 
-## 脚本与规则说明
+## 项目结构
 
-本项目支持 **Quantumult X** 和 **Surge**。点击下方表格中的链接即可获取对应的订阅地址：
+- `rule/`：分流规则目录
+- `rewrite/`：复写规则目录
+- `README.md`：项目说明文档
+
+---
+
+## 快速开始
+
+### 1. 选择需要的规则或复写
+
+- Quantumult X 用户可直接引用对应的 `snippet` 或 `list`
+- Surge 用户可直接引用对应的 `sgmodule` 或 `list`
+
+### 2. 导入订阅链接
 
 | APP名称 | 介绍 | 订阅链接 | 维护状态 |
 | :--- | :--- | :--- | :--- |
-| **微博** | 微博去除广告及多余模块 | [QX (Snippet)](https://raw.githubusercontent.com/neishe321/ios_rule_script/refs/heads/main/rewrite/QuantumultX/weibo.snippet) / [Surge (Module)](https://raw.githubusercontent.com/neishe321/ios_rule_script/refs/heads/main/rewrite/Surge/weibo.sgmodule) | 🟢 正常 |
-| **番茄小说** | 番茄小说去除广告及福利标签 | [QX (List)](https://raw.githubusercontent.com/neishe321/ios_rule_script/refs/heads/main/rule/QuantumultX/fanqie.list) / [Surge (List)](https://raw.githubusercontent.com/neishe321/ios_rule_script/refs/heads/main/rule/Surge/fanqie.list) | 🟢 正常 |
+| **微博** | 微博去除广告及多余模块 | [QX (Snippet)](https://raw.githubusercontent.com/neishe321/ios_rule_script/refs/heads/main/rewrite/QuantumultX/weibo.snippet) / [Surge (Module)](https://raw.githubusercontent.com/neishe321/ios_rule_script/refs/heads/main/rewrite/Surge/weibo.sgmodule) | 正常 |
+| **番茄小说** | 番茄小说去除广告及福利标签 | [QX (List)](https://raw.githubusercontent.com/neishe321/ios_rule_script/refs/heads/main/rule/QuantumultX/fanqie.list) / [Surge (List)](https://raw.githubusercontent.com/neishe321/ios_rule_script/refs/heads/main/rule/Surge/fanqie.list) | 正常 |
 
 ---
 
 ## 规则来源
-我们并不生产规则，我们只是开源规则的搬运工。
 
-分流规则:
+分流规则：
 
 [https://github.com/neishe321/ios_rule_script/tree/main/rule](https://github.com/neishe321/ios_rule_script/tree/main/rule)
 
-复写规则:
+复写规则：
 
 [https://github.com/neishe321/ios_rule_script/tree/main/rewrite](https://github.com/neishe321/ios_rule_script/tree/main/rewrite)
 
-所有规则数据均来自互联网，感谢开源规则项目作者的辛勤付出。
+所有规则数据均来自互联网，感谢开源规则项目作者的持续维护与分享。
 
 ---
 
-## 鸣谢
-感谢以下贡献者的辛勤付出（排名不分先后）：
+## 重要说明
 
-* [@blackmatrix7](https://github.com/blackmatrix7)
-* [@BaileyZyp](https://github.com/BaileyZyp)
-* [@Mazeorz](https://github.com/Mazeorz)
-* [@LuzMasonj](https://github.com/LuzMasonj)
-* [@chouchoui](https://github.com/chouchoui)
-* [@ypannnn](https://github.com/ypannnn)
-* [@echizenryoma](https://github.com/echizenryoma)
-* [@zirawell](https://github.com/zirawell)
-* [@urzz](https://github.com/urzz)
-* [@ASD-max](https://github.com/ASD-max)
+- 本项目内容仅供学习和研究使用。
+- 本项目不保证所有规则、脚本在任何环境下均可正常工作。
+- 使用前请根据自身设备、地区、网络环境自行测试。
+- 因使用本项目内容造成的任何问题，需由使用者自行承担。
+
 ---
 
+## 使用建议
+
+- 按需引用对应规则，避免一次性添加过多内容。
+- 使用前建议先阅读原始规则内容，确认适配自己的配置。
+- 若上游规则或接口发生变化，相关内容可能需要同步更新。
+
+---
+
+## 致谢
+
+以下开源项目为本项目提供了规则来源与整理参考：
+
+- [blackmatrix7](https://github.com/blackmatrix7)
+- [KOP-XIAO](https://github.com/KOP-XIAO)
+
+感谢相关作者的持续维护与分享。
+
+---
+
+## 许可证
+
+本项目内容仅供学习与交流使用，请遵守相关服务条款与版权要求。
