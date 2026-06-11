@@ -1,0 +1,16 @@
+#!name = 微博轻享版去广告
+#!desc = 去除帖子和会员推广
+#!author = neishe321
+#!data = 2026-06-12 06:22:50
+
+hostname = api.weibo.cn, weibointl.api.weibo.cn
+
+# 帖子大家都在搜
+^https:\/\/api\.weibo\.cn\/2\/statuses\/container_detail\? url jsonjq-response-body del(.pageHeader.data.items[]|select(.data.itemid=="top_searching"))
+
+# 趋势页搜索框关键词
+^https:\/\/weibointl\.api\.weibo\.cn\/portal\.php\?a=get_searching_info& url reject-dict
+
+# 趋势页推广模块
+^https:\/\/weibointl\.api\.weibo\.cn\/portal\.php\?a=trends& url jsonjq-response-body .data.order = ["discover", "search_topic", "topics", "native_content"] | .data.discover = .data.discover[1:]
+
