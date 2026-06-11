@@ -12,7 +12,7 @@ hostname = api.weibo.cn, weibointl.api.weibo.cn
 ^https:\/\/weibointl\.api\.weibo\.cn\/portal\.php\?a=get_searching_info& url reject-dict
 
 # 趋势页推广模块
-^https:\/\/weibointl\.api\.weibo\.cn\/portal\.php\?a=trends& url jsonjq-response-body .data.order = ["discover", "search_topic", "topics", "native_content"] | .data.discover = .data.discover[1:]
+^https:\/\/weibointl\.api\.weibo\.cn\/portal\.php\?a=trends& url jsonjq-response-body .data.order = ["discover", "search_topic", "topics"] | .data.discover = .data.discover[1:]
 
 # 个人中心会员设置
 ^https:\/\/weibointl\.api\.weibo\.cn\/portal\.php\?a=user_center& url jsonjq-response-body del(.data.cards[]|select(.items[0].type=="personal_vip"))
