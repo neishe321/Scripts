@@ -156,7 +156,6 @@ function processFeedArray(array) {
         "finder_window",  // 发现页热搜下方滚动横幅
         "tongcheng_usertagwords",
         // "mine_topics",    // 我的超话列表一键签到
-        "top_searching",  // 帖子详情下方大家都在搜 2025/10/15
     ]);
 
     const keywords = [
@@ -191,7 +190,7 @@ function processFeedArray(array) {
             data?.is_ad_card === 1 ||
             data?.promotion?.ad === "ad" ||
             data?.promotion?.adtype === 1 ||    // 热搜下方横幅漏网之鱼
-            data?.is_detail === true || // 可能误杀
+            // data?.is_detail === true || // 可能误杀
             data?.card_id === "search_card" ||
             (data?.group && data?.anchorId) ||
             data?.card_type === 227 || // 此条微博讨论情况
@@ -225,14 +224,14 @@ if (url.includes("statuses/container_detail_comment") || url.includes("statuses/
     processCommentArray(obj.items);
 }
 
-// 微博帖子左下角转发列表
-else if (url.includes("statuses/container_detail_forward")) {
-    processFeedArray(obj?.items);
-}
+// // 微博帖子左下角转发列表
+// else if (url.includes("statuses/container_detail_forward")) {
+//     processFeedArray(obj?.items);
+// }
 
 // 微博帖子内容和图片外的多余卡片信息
 else if (url.includes("statuses/container_detail")) {
-    processFeedArray(obj?.pageHeader?.data?.items);
+    if (obj.pageHeader.data.items) obj.pageHeader.data.items = [obj.pageHeader.data.items[0]];    // 只要帖子正文
     // 帖子内容
     cleanUser(obj?.detailInfo?.status?.user);
     cleanExtend(obj?.detailInfo?.status);
@@ -259,19 +258,19 @@ else if (url.includes("comments/build_comments")) {
     cleanComment(obj?.status);
 }
 
-// 微博首页/个人主页信息流
-else if (url.includes("statuses/container_timeline") || url.includes("profile/container_timeline")) {
-    if (obj?.loadedInfo) delete obj.loadedInfo.headers;
-    processFeedArray(obj?.items);
-}
+// // 微博首页/个人主页信息流
+// else if (url.includes("statuses/container_timeline") || url.includes("profile/container_timeline")) {
+//     if (obj?.loadedInfo) delete obj.loadedInfo.headers;
+//     processFeedArray(obj?.items);
+// }
 
-else if (url.includes("messageflow/notice")) {
-    processFeedArray(obj?.messages);
-}
+// else if (url.includes("messageflow/notice")) {
+//     processFeedArray(obj?.messages);
+// }
 
 // 微博发现页
 else if (url.includes("search/finder")) {
-    processFeedArray(obj?.header?.data?.items); // 发现页热搜下方滚动横幅和滚动横幅下方广告1
+    // processFeedArray(obj?.header?.data?.items); // 发现页热搜下方滚动横幅和滚动横幅下方广告1
     if (obj?.header?.insert_data) delete obj.header.insert_data; // 发现页热搜下方滚动横幅和滚动横幅下方广告2
     if (obj?.channelInfo) delete obj.channelInfo.moreChannels; // 下拉功能入口
 
@@ -283,7 +282,7 @@ else if (url.includes("search/finder")) {
     }
 
     const payload = obj.channelInfo?.channels?.find(c => c?.payload)?.payload; // 自动提取tab下的下的信息流
-    processFeedArray(payload?.items); // 处理提取的信息流
+    // processFeedArray(payload?.items); // 处理提取的信息流
     if (payload?.loadedInfo) {
         delete payload.loadedInfo.searchBarContent; // 处理大家正在搜
         delete payload.loadedInfo.headerBack; // 搜索框主题 下拉背景
@@ -297,22 +296,22 @@ else if (url.includes("search/container_discover")) {
         delete obj.loadedInfo.theme;
         delete obj.loadedInfo.headerBack; // 搜索框主题 下拉背景
     }
-    processFeedArray(obj?.items);
+    // processFeedArray(obj?.items);
 }
 
-// 微博发现页热点/热问/热转 (*,"2/cardlist","2/flowlist")
-else if (url.includes("search/container_timeline") || url.includes("2/flowlist")) {
-    processFeedArray(obj?.items);
-}
+// // 微博发现页热点/热问/热转 (*,"2/cardlist","2/flowlist")
+// else if (url.includes("search/container_timeline") || url.includes("2/flowlist")) {
+//     processFeedArray(obj?.items);
+// }
 
-// 微博长文本动态
-else if (url.includes("2/statuses/longtext_show_batch")) {
-    processFeedArray(obj?.longtexts?.data);
-}
+// // 微博长文本动态
+// else if (url.includes("2/statuses/longtext_show_batch")) {
+//     processFeedArray(obj?.longtexts?.data);
+// }
 
-// 微博全局搜索
-else if (url.includes("searchall")) {
-    processFeedArray(obj?.items);
-}
+// // 微博全局搜索
+// else if (url.includes("searchall")) {
+//     processFeedArray(obj?.items);
+// }
 
 $done({ body: JSON.stringify(obj) });
