@@ -5,22 +5,19 @@
 
 hostname = api.weibo.cn, weibointl.api.weibo.cn
 
-# 帖子推广大家都在搜
-^https:\/\/api\.weibo\.cn\/2\/statuses\/container_detail\? url jsonjq-response-body del(.pageHeader.data.items[]|select(.data.itemid=="top_searching"))
-
+host, api.touch-moblie.com, reject
+host-suffix, shenshiads.com, reject
+# 启动广告
+^https:\/\/weibointl\.api\.weibo\.cn\/portal\.php\?a=get_coopen_ads& url reject-dict
 # 信息流广告
 ^https:\/\/api\.weibo\.cn\/2\/ad\/weibointl\? url reject-dict
-
+# 大家都在搜
+^https:\/\/api\.weibo\.cn\/2\/statuses\/container_detail\? url jsonjq-response-body del(.pageHeader.data.items[]|select(.data.itemid=="top_searching"))
 # 搜索框关键词
 ^https:\/\/weibointl\.api\.weibo\.cn\/portal\.php\?a=get_searching_info& url reject-dict
-
 # 搜索框下方热搜榜单
 ^https:\/\/weibointl\.api\.weibo\.cn\/portal\.php\?ct=feed&a=search_topic& url jsonjq-response-body .data=[]
-
 # 趋势页推广模块
 ^https:\/\/weibointl\.api\.weibo\.cn\/portal\.php\?a=trends& url jsonjq-response-body .data.order = ["discover", "search_topic"] | .data.discover = .data.discover[1:]
-
 # 个人中心会员设置
 ^https:\/\/weibointl\.api\.weibo\.cn\/portal\.php\?a=user_center& url jsonjq-response-body del(.data.cards[]|select(.items[0].type=="personal_vip"))
-
-
