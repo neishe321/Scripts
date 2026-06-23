@@ -1,0 +1,27 @@
+#!name=微博轻享版去广告
+#!desc=去除帖子和会员推广
+#!author=neishe321
+#!data=2026-06-12 06:22:50
+
+[Rule]
+DOMAIN,api.touch-moblie.com,REJECT
+DOMAIN-SUFFIX,shenshiads.com,REJECT
+
+[Body Rewrite]
+http-response-jq ^https:\/\/api\.weibo\.cn\/2\/statuses\/container_detail\? 'del(.pageHeader.data.items[]|select(.data.itemid=="top_searching"))'
+http-response-jq ^https:\/\/weibointl\.api\.weibo\.cn\/portal\.php\?ct=feed&a=search_topic& '.data=[]'
+http-response-jq ^https:\/\/weibointl\.api\.weibo\.cn\/portal\.php\?a=trends& '.data.order = ["discover", "search_topic"] | .data.discover = .data.discover[1:]'
+http-response-jq ^https:\/\/weibointl\.api\.weibo\.cn\/portal\.php\?a=user_center& 'del(.data.cards[]|select(.items[0].type=="personal_vip"))'
+
+[Map Local]
+# 启动广告
+^https:\/\/weibointl\.api\.weibo\.cn\/portal\.php\?a=get_coopen_ads& data-type=text data="{}" status-code=200 header="Content-Type:application/json"
+
+# 信息流广告
+^https:\/\/api\.weibo\.cn\/2\/ad\/weibointl\? data-type=text data="{}" status-code=200 header="Content-Type:application/json"
+
+# 搜索框关键词
+^https:\/\/weibointl\.api\.weibo\.cn\/portal\.php\?a=get_searching_info& data-type=text data="{}" status-code=200 header="Content-Type:application/json"
+
+[MITM]
+hostname = %APPEND% api.weibo.cn, weibointl.api.weibo.cn
